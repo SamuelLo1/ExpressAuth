@@ -29,6 +29,6 @@ function beginPort() {
 //convert data to json before sending    
 app.use(express.json());
 //use routes defined in userRoutes.js
-app.use(authRoutes);
+app.use("/api/users",authRoutes);
 
 
