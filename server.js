@@ -15,29 +15,20 @@ require('dotenv').config();
 const app = express();
 
 //convert data to json before sending to paths
-app.use(express.json());
-app.use('/auth', authRoutes);
 
 //connects to database
-async function connectDB() {
-    mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log('MongoDB connected');
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => beginPort())
+    .catch((err) => console.log(err));
+
+function beginPort() {
+    app.listen(3000);
+    console.log("Listening on port http://localhost:3000/");
 }
-connectDB().catch(console.error);
 
-const hostname = "127.0.0.1";
-const port = 3000;
+//convert data to json before sending    
+app.use(express.json());
+//use routes defined in userRoutes.js
+app.use(authRoutes);
 
-//Create HTTP server and listen on port 3000 for requests
-const server = http.createServer((req, res) => {
-  //Set the response HTTP header with HTTP status and Content type
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World\n");
-});
-
-//listen for request on port 3000, and as a callback function have the port listened on logged
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
 
