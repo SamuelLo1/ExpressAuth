@@ -1,7 +1,8 @@
 const User = require('../models/User');
-//const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
-
+//create user in db
 async function registerUser(req, res) {
     const { name, email, password, isAdmin } = req.body;
     try {
@@ -15,4 +16,18 @@ async function registerUser(req, res) {
     }
 }
 
-module.exports = { registerUser };
+//user uses email and password to login
+//check if password matches with bcrypt hash and generate a jwt token if so 
+async function loginUser(req, res) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user && (await bcrypt.compare(password, user.password))) {
+        //const secrets = await getSecret('your-secret-name');
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token });
+    } else {
+        res.status(401).json({ error: 'Invalid credentials' });
+    }
+}
+
+module.exports = { registerUser , loginUser};
