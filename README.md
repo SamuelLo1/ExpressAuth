@@ -13,11 +13,10 @@ Express backend User management system with MongoDB for storage and JWT auth. Us
 
    (alternative method of storing via AWS secret manager)
 
-3) run '''npm i'''
+3) run ```npm i``` to install all node module dependencies and you are set!
 
-### To Begin:
+### Using the API
 
--
 
 ### Registering a user
 
