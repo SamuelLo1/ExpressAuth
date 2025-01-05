@@ -2,11 +2,10 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
-//create user in db
+//users register with all required fields
 async function registerUser(req, res) {
     const { name, email, password, isAdmin } = req.body;
     try {
-        console.log("register endpoint hit")
         const user = await User.create({ name, email, password, isAdmin });
         res.status(201).json(user);
         res.send("User created");
@@ -30,4 +29,39 @@ async function loginUser(req, res) {
     }
 }
 
-module.exports = { registerUser , loginUser};
+
+//to call this function pass in token as header in req
+//token will verify and return the user info
+async function viewProfile(req,res){
+    try {
+        // Step 1: Extract the token from the Authorization header
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Unauthorized: No token provided' });
+        }
+        const token = authHeader.split(' ')[1];
+
+        // Step 2: Fetch the JWT secret from AWS Secrets Manager
+        
+        // Step 3: Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded || !decoded.id) {
+            return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+        }
+        // Step 4: Retrieve user information from the database
+        const user = await User.findById(decoded.id).select('-password'); // Exclude password
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Step 5: Return user data
+        res.status(200).json(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
+
+
+
+module.exports = { registerUser , loginUser, viewProfile};

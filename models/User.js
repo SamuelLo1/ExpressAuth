@@ -8,8 +8,7 @@ const userSchema = new mongoose.Schema({
     isAdmin: {type: Boolean, required: true, default: false}
 });
 
-//runs before user is saved in db
-//check if a password is modified and if not, hash it
+//hash password before saving to db
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 10);
