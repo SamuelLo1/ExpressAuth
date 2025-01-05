@@ -3,7 +3,7 @@
 This Express API has user management functionality allowing users to register a new account, log in to their account, and view their account. By running the express server, HTTP requests can be sent to the server to perform certain user actions at different routes. The API has multiple routes set up: one for registration, one for login, and one for profile view.
 
 Users are stored in a Mongo DB cluster after registration. JWT tokens are used to verify a user is logged in properly before being able to view protected routes such as "/api/users/profile".
-AWS secret manager is also used to handle secrets such as the JWT secret (used in token generation) and the Mongo DB URI (database connection URI) secret. 
+For enhanced security on Database URI and JWT secret, both will be stored in the AWS secret manager. 
 
 ### Setup:
 
