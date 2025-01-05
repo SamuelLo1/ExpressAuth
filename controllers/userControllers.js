@@ -8,7 +8,7 @@ async function registerUser(req, res) {
     try {
         const user = await User.create({ name, email, password, isAdmin });
         res.status(201).json(user);
-        res.send("User created");
+        console.log("User created");
     } catch (err) {
         console.log("error fetching",err);
         res.status(400).json({ error: err.message });
@@ -36,6 +36,7 @@ async function viewProfile(req,res){
     try {
         // Step 1: Extract the token from the Authorization header
         const authHeader = req.headers.authorization;
+        console.log("authHeader",authHeader);
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(401).json({ error: 'Unauthorized: No token provided' });
         }

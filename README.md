@@ -6,7 +6,6 @@ Express backend User management system with MongoDB for storage and JWT auth. Us
 
 1. clone this repository into an empty folder
 2. setup environemnt variables:
-   (for local development add a dotenv file and store these variables as "MONGO_URI" and "JWT_SECRET")
 
    - MongoDB URI
    - JWT Secret
@@ -17,8 +16,10 @@ Express backend User management system with MongoDB for storage and JWT auth. Us
 
 ### Using the API
 
-1. start the server by running `npm run dev` in the terminal , you should see that server is running on port 3000
-2.
+1. start the server by running `npm run dev` in the terminal , if everything is connected the text "Listening on port http://localhost:3000/" should appear in console.
+2. open up postman and make sure you are able to send local requests
+
+### API calls:
 
 ### Registering a user
 
