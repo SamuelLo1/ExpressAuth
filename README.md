@@ -59,8 +59,5 @@ Express backend User management system with MongoDB for storage and JWT auth. Us
    
 
 
-### Registering a user
-
-- Using Postman:
-
 ### Versions:
+   Node.js : v20.5.1
