@@ -57,6 +57,8 @@ For enhanced security on sensitive keys such as the Database URI and the JWT sec
       ```
    (using Postman tool add an extra field to the header in the request with key : "authorization" , value : "Bearer {JWT token}")
    if you get a server error try getting a new JWT token as the previous token may have expired
+
+   Upon success, the profile of the JSON web token's bearer will be returned.
    
 
 
