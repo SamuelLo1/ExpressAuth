@@ -1,16 +1,17 @@
 # ExpressAuth
 
-Express backend User management system with MongoDB for storage and JWT auth. Using AWS secret manager to store secrets.
+This Express API has user management functionality allowing users to register a new account, log in to their account, and view their account. By running the express server, HTTP requests can be sent to the server to perform certain user actions at different routes. The API has multiple routes set up one for registration, one for login, and one for profile view.
+
+Users are stored in a Mongo DB cluster and API access to protected routes such as the profile view are protected via JWT token authentication. 
+AWS secret manager is also used to handle secrets such as the JWT secret (used in token generation) and the Mongo DB URI (database connection URI) secret. 
 
 ### Setup:
 
 1. clone this repository into an empty folder
-2. setup environemnt variables:
+2. setup environment variables:
 
    - MongoDB URI
    - JWT Secret
-
-   (alternative method of storing via AWS secret manager)
 
 3) run `npm i` to install all node module dependencies and you are set!
 
@@ -20,7 +21,7 @@ Express backend User management system with MongoDB for storage and JWT auth. Us
 
 
 #### API calls:
-1. Registering a user:
+1. To register a user:
    send a POST request to http://localhost:3000/api/users/register
    with the following body:
       
@@ -35,7 +36,7 @@ Express backend User management system with MongoDB for storage and JWT auth. Us
 
    Upon success, the user object is returned as the response
    
-2. Logging in an existing user:
+2. To login an existing user:
    send a POST request to http://localhost:3000/api/users/login
    with the following body:
       ```
@@ -46,7 +47,7 @@ Express backend User management system with MongoDB for storage and JWT auth. Us
       ```
 
    Upon success, a temporary JWT token is returned as a response (the token has a time limit of 1hr so it will need to be refreshed when not working)
-3. viewing a user profile:
+3. To view a user profile:
    send a GET request to http://localhost:3000/api/users/profile
    with the following added to header:
       ```
