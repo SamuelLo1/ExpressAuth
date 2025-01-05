@@ -1,14 +1,16 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const { connectDB } = require('./utils/connectDB');
 const authRoutes = require('./routes/userRoutes');
 require('dotenv').config();
 
 const app = express();
 
-//connects to database
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => beginPort())
-    .catch((err) => console.log(err));
+//connect to DB and start server
+function main(){
+    connectDB();
+    beginPort();
+}
+
 
 //function to start listening on port 3000
 function beginPort() {
@@ -16,6 +18,7 @@ function beginPort() {
     console.log("Listening on port http://localhost:3000/"); 
 }
 
+main();
 //convert data to json before sending    
 app.use(express.json());
 
