@@ -8,13 +8,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/userRoutes');
 const http = require("http");
-
+const { GetSecretValueCommand, SecretsManagerClient } = require("@aws-sdk/client-secrets-manager");
 require('dotenv').config();
 
-
+const secret_name = "dev_test_secrets";
 const app = express();
-
-//convert data to json before sending to paths
 
 //connects to database
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -24,7 +22,42 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 function beginPort() {
     app.listen(3000);
     console.log("Listening on port http://localhost:3000/");
+    getSecrets(secret_name).then((data) => {
+        console.log("secrets", data);
+    }).catch((err) => {
+        console.log("error fetching secrets", err);
+    });
 }
+
+
+  
+
+const getSecrets = async (secret_name) => {
+    return await new Promise((resolve, reject) => {
+
+        const client = new SecretsManagerClient({
+            region: "us-east-2",
+            credentials: {
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            },
+        });
+
+        client.send(new GetSecretValueCommand({
+            SecretId: secret_name
+
+        }), (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(data);
+                resolve(data);
+            }
+        });
+    });
+}
+
+
 
 //convert data to json before sending    
 app.use(express.json());
