@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const { getSecrets } = require('../utils/getSecrets');
+
+
 
 //users register with all required fields
 async function registerUser(req, res) {
@@ -21,7 +24,8 @@ async function loginUser(req, res) {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
-        //const secrets = await getSecret('your-secret-name');
+        const JWT_Secret = await getSecrets();
+        console.log(JWT_Secret);
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ token });
     } else {
@@ -43,7 +47,7 @@ async function viewProfile(req,res){
         const token = authHeader.split(' ')[1];
 
         // Step 2: Fetch the JWT secret from AWS Secrets Manager
-        
+
         // Step 3: Verify the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         if (!decoded || !decoded.id) {
