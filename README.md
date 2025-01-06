@@ -12,6 +12,7 @@ For enhanced security on sensitive keys such as the Database URI and the JWT sec
    - MongoDB URI
    - JWT Secret
 3. setup AWS secrets manager:
+   - create a secret name
    - add MongoDB URI as **MONGO_URI**
    - add JWT Secret key as **JWT_SECRET**
 4. create a .env file to store AWS IAM access id and key
@@ -25,7 +26,9 @@ For enhanced security on sensitive keys such as the Database URI and the JWT sec
    - store key in .env as:
      **AWS_SECRET_ACCESS_KEY="YOUR KEY"**
 
-5) run `npm i` to install all node module dependencies and you are set!
+5. store the AWS secret name to access the secrets as **AWS_SECRET_NAME** within the .env file
+6. include a .gitignore file and include .env inside the .gitignore file
+7. run `npm i` to install all node module dependencies and you are set!
 
 ### Using the API:
 
