@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const { getSecrets } = require('../utils/getSecrets');
+
+
 
 //users register with all required fields
 async function registerUser(req, res) {
@@ -21,8 +24,9 @@ async function loginUser(req, res) {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
-        //const secrets = await getSecret('your-secret-name');
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const secrets = await getSecrets();
+        const JWT_SECRET = JSON.parse(secrets.SecretString).JWT_SECRET;
+        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
         res.json({ token });
     } else {
         res.status(401).json({ error: 'Invalid credentials' });
@@ -36,16 +40,16 @@ async function viewProfile(req,res){
     try {
         // Step 1: Extract the token from the Authorization header
         const authHeader = req.headers.authorization;
-        console.log("authHeader",authHeader);
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(401).json({ error: 'Unauthorized: No token provided' });
         }
         const token = authHeader.split(' ')[1];
 
         // Step 2: Fetch the JWT secret from AWS Secrets Manager
-        
+        const secrets = await getSecrets();
+        const JWT_SECRET = JSON.parse(secrets.SecretString).JWT_SECRET;
         // Step 3: Verify the token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, JWT_SECRET);
         if (!decoded || !decoded.id) {
             return res.status(401).json({ error: 'Unauthorized: Invalid token' });
         }
