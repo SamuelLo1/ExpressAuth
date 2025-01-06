@@ -70,7 +70,7 @@ Start the server by running `npm run dev` in the terminal. If everything is conn
 
    ```
    {
-      "authorization" : "Bearer {JWT token}"
+      "Authorization" : "Bearer {JWT token}"
    }
    ```
 
