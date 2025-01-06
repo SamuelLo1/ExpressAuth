@@ -32,12 +32,12 @@ For enhanced security on sensitive keys such as the Database URI and the JWT sec
 
 ### Using the API:
 
-Start the server by running `npm run dev` in the terminal. If everything is connected, the text "Listening on port http://localhost:3000/" should appear in the console.
+Start the server by running `npm run dev` in the terminal. If everything is connected, the text "Listening on port http://localhost:5000/" should appear in the console.
 
 #### API calls:
 
 1. To register a user:
-   send a POST request to http://localhost:3000/api/users/register
+   send a POST request to http://localhost:5000/api/users/register
    with the following body:
 
    ```
@@ -52,7 +52,7 @@ Start the server by running `npm run dev` in the terminal. If everything is conn
    Upon success, the user object is returned as the response
 
 2. To login an existing user:
-   send a POST request to http://localhost:3000/api/users/login
+   send a POST request to http://localhost:5000/api/users/login
    with the following body:
 
    ```
@@ -65,7 +65,7 @@ Start the server by running `npm run dev` in the terminal. If everything is conn
    Upon success, a temporary JWT token is returned as a response (the token has a time limit of 1hr so it will need to be refreshed when not working)
 
 3. To view a user profile:
-   send a GET request to http://localhost:3000/api/users/profile
+   send a GET request to http://localhost:5000/api/users/profile
    with the following added to header:
 
    ```
@@ -79,12 +79,13 @@ Start the server by running `npm run dev` in the terminal. If everything is conn
 
    Upon success, the profile of the JSON web token's bearer will be returned.
 
-### Testing: 
-   Using postman to run tests is best practice but I have also included a unit test for each of the routes to make sure they work after the setup steps are complete. 
-   
-   By running ```npm test```, a test server will start up on port 4000 and try to register, login, and view the profile of an example user. The example user will be stored in the MongoDB cluster and should be deleted after testing. 
-   
-   Note that: all tests may not pass since you can only register a user once, make sure to update the body and headers of responses to test new responses. 
+### Testing:
+
+Using postman to run tests is best practice but I have also included a unit test for each of the routes to make sure they work after the setup steps are complete.
+
+By running `npm test`, a test server will start up on port 4000 and try to register, login, and view the profile of an example user. The example user will be stored in the MongoDB cluster and should be deleted after testing.
+
+Note that: all tests may not pass since you can only register a user once, make sure to update the body and headers of responses to test new responses.
 
 ### Versions:
 
