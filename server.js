@@ -11,8 +11,7 @@ function main(){
     beginPort();
 }
 
-
-//function to start listening on port 3000
+//start server on http://localhost:3000/
 function beginPort() {
     app.listen(3000);
     console.log("Listening on port http://localhost:3000/"); 

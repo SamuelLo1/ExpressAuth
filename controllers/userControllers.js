@@ -5,7 +5,7 @@ const { getSecrets } = require('../utils/getSecrets');
 
 
 
-//users register with all required fields
+//users register with all required fields POST req
 async function registerUser(req, res) {
     const { name, email, password, isAdmin } = req.body;
     try {
@@ -18,7 +18,7 @@ async function registerUser(req, res) {
     }
 }
 
-//user uses email and password to login
+//user uses email and password to login POST req
 //check if password matches with bcrypt hash and generate a jwt token if so 
 async function loginUser(req, res) {
     const { email, password } = req.body;
@@ -34,32 +34,34 @@ async function loginUser(req, res) {
 }
 
 
-//to call this function pass in token as header in req
+//to call this function pass in token as header in GET req
 //token will verify and return the user info
 async function viewProfile(req,res){
     try {
-        // Step 1: Extract the token from the Authorization header
+        //extract token from header
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(401).json({ error: 'Unauthorized: No token provided' });
         }
         const token = authHeader.split(' ')[1];
 
-        // Step 2: Fetch the JWT secret from AWS Secrets Manager
+        //Fetch the JWT secret from AWS Secrets Manager
         const secrets = await getSecrets();
         const JWT_SECRET = JSON.parse(secrets.SecretString).JWT_SECRET;
-        // Step 3: Verify the token
+
+        //Verify the token and decode the user id
         const decoded = jwt.verify(token, JWT_SECRET);
         if (!decoded || !decoded.id) {
             return res.status(401).json({ error: 'Unauthorized: Invalid token' });
         }
-        // Step 4: Retrieve user information from the database
+
+        //fetch user data with id
         const user = await User.findById(decoded.id).select('-password'); // Exclude password
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Step 5: Return user data
+        //Return user data
         res.status(200).json(user);
     } catch (err) {
         console.log(err);
@@ -69,4 +71,4 @@ async function viewProfile(req,res){
 
 
 
-module.exports = { registerUser , loginUser, viewProfile};
+module.exports = { registerUser , loginUser, viewProfile };
