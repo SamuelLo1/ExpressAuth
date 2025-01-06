@@ -81,7 +81,9 @@ Start the server by running `npm run dev` in the terminal. If everything is conn
 
 ### Testing: 
    Using postman to run tests is best practice but I have also included a unit test for each of the routes to make sure they work after the setup steps are complete. 
+   
    By running ```npm test```, a test server will start up on port 4000 and try to register, login, and view the profile of an example user. The example user will be stored in the MongoDB cluster and should be deleted after testing. 
+   
    Note that: all tests may not pass since you can only register a user once, make sure to update the body and headers of responses to test new responses. 
 
 ### Versions:
