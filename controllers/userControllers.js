@@ -5,7 +5,7 @@ const { getSecrets } = require('../utils/getSecrets');
 
 
 
-//users register with all required fields POST req
+//users register with all required fields (POST req)
 async function registerUser(req, res) {
     const { name, email, password, isAdmin } = req.body;
     try {
@@ -18,11 +18,13 @@ async function registerUser(req, res) {
     }
 }
 
-//user uses email and password to login POST req
+//user uses email and password to login (POST req)
 //check if password matches with bcrypt hash and generate a jwt token if so 
 async function loginUser(req, res) {
+    //extract email and find user from db
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    //decrypt password and check for match, then generate jwt token if match
     if (user && (await bcrypt.compare(password, user.password))) {
         const secrets = await getSecrets();
         const JWT_SECRET = JSON.parse(secrets.SecretString).JWT_SECRET;
