@@ -26,7 +26,7 @@ For enhanced security on sensitive keys such as the Database URI and the JWT sec
    - store key in .env as:
      **AWS_SECRET_ACCESS_KEY="YOUR KEY"**
 
-5. store the AWS secret name to access the secrets as **AWS_SECRET_NAME** within the .env file
+5. store the AWS secret name to access the secrets as **AWS_SECRET_NAME="YOUR AWS SECRET NAME"** within the .env file
 6. include a .gitignore file and include .env inside the .gitignore file
 7. run `npm i` to install all node module dependencies and you are set!
 
