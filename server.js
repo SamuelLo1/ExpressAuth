@@ -4,24 +4,27 @@ const authRoutes = require('./routes/userRoutes');
 require('dotenv').config();
 
 const app = express();
-
 //connect to DB and start server
-function main(){
-    connectDB();
-    beginPort();
+//start the server on port 3000
+async function main() {
+    await connectDB(); 
+    return beginPort(); 
 }
 
-//start server on http://localhost:3000/
 function beginPort() {
-    app.listen(3000);
-    console.log("Listening on port http://localhost:3000/"); 
+    const port = process.env.PORT || 3000;
+    const server = app.listen(port, () => {
+        console.log(`Listening on port http://localhost:${port}/`);
+    });
+    return server;
 }
 
-main();
+
+main().catch(console.error);
 //convert data to json before sending    
 app.use(express.json());
-
 //use routes defined in userRoutes.js
 app.use("/api/users",authRoutes);
 
-
+//for testing
+module.exports = { app, main };
