@@ -12,21 +12,20 @@ For enhanced security on sensitive keys such as the Database URI and the JWT sec
    - MongoDB URI
    - JWT Secret
 3. setup AWS secrets manager:
-
-   -
-
-4. create a .env file to store AWS IAM id and key
+   - add MongoDB URI as **MONGO_URI**
+   - add JWT Secret key as **JWT_SECRET**
+4. create a .env file to store AWS IAM access id and key
 
    - an aws IAM user can be created via this link: https://us-east-1.console.aws.amazon.com/iam/home#/home
 
-   - after clicking on link, click "users", then create an IAM user and store the key and id in the .env file
+   - after clicking on link, click "users", then create an IAM user and generate the access key and access id in the .env file
 
-   - store id as:
+   - store id in .env as:
      **AWS_ACCESS_KEY_ID="YOUR ID"**
-   - store key as
+   - store key in .env as:
      **AWS_SECRET_ACCESS_KEY="YOUR KEY"**
 
-3) run `npm i` to install all node module dependencies and you are set!
+5) run `npm i` to install all node module dependencies and you are set!
 
 ### Using the API:
 
