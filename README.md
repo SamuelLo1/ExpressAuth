@@ -22,11 +22,11 @@ For enhanced security on sensitive keys such as the Database URI and the JWT sec
    - after clicking on link, click "users", then create an IAM user and generate the access key and access id in the .env file
 
    - store id in .env as:
-     **AWS_ACCESS_KEY_ID="YOUR ID"**
+     **AWS_ACCESS_KEY_ID**
    - store key in .env as:
-     **AWS_SECRET_ACCESS_KEY="YOUR KEY"**
+     **AWS_SECRET_ACCESS_KEY**
 
-5. store the AWS secret name to access the secrets as **AWS_SECRET_NAME="YOUR AWS SECRET NAME"** within the .env file
+5. store the AWS secret name to access the secrets as **AWS_SECRET_NAME** within the .env file
 6. include a .gitignore file and include .env inside the .gitignore file
 7. run `npm i` to install all node module dependencies and you are set!
 
